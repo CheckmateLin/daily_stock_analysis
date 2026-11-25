@@ -25,6 +25,7 @@ logger = logging.getLogger(__name__)
 DISCORD_MAX_CONTENT_LENGTH = 2000
 DISCORD_MAX_RETRIES = 3
 DISCORD_CHUNK_SLEEP_SECONDS = 1
+_DISCORD_TRADITIONAL_CONVERTER = OpenCC("s2tw")
 
 
 class DiscordSender:
@@ -71,7 +72,9 @@ class DiscordSender:
         Returns:
             是否发送成功
         """
-        sanitized_content = strip_hidden_markdown_metadata(content).strip()
+        sanitized_content = _DISCORD_TRADITIONAL_CONVERTER.convert(
+            strip_hidden_markdown_metadata(content)
+        ).strip()
         if not sanitized_content:
             logger.warning("Discord 消息内容为空，跳过推送")
             return False
