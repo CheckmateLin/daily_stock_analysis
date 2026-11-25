@@ -5,6 +5,7 @@ Discord 发送提醒服务
 职责：
 1. 通过 webhook 或 Discord bot API 发送 Discord 消息
 """
+from opencc import OpenCC
 import logging
 import time
 from typing import Optional
